@@ -36,9 +36,13 @@ const Navigation = () => {
 
   return (
     <nav className="fixed top-0 w-full h-16 bg-white/70 backdrop-blur-xl border-b border-black/[0.03] flex items-center justify-between px-8 z-50">
-      <div className="flex items-center gap-8 flex-1">
+      <div className="flex items-center gap-6 flex-1">
         <NavLink to="/money" label="Money" />
         <NavLink to="/business" label="Business" />
+        <NavLink to="/intelligence" label="Intel" />
+        <NavLink to="/technology" label="Tech" />
+        <NavLink to="/health" label="Health" />
+        <NavLink to="/culture" label="Culture" />
       </div>
 
       <Link to="/" className="text-black font-serif font-black text-2xl tracking-tighter hover:opacity-70 transition-opacity">
@@ -110,6 +114,10 @@ function App() {
           <Route path="/" element={<Feed category="money" title="Sovereign Finance" subtitle="Understanding the flow of value and the mechanics of debt." />} />
           <Route path="/money" element={<Feed category="money" title="Sovereign Finance" subtitle="Understanding the flow of value and the mechanics of debt." />} />
           <Route path="/business" element={<Feed category="business" title="Systemic Leverage" subtitle="Building scalable operations and understanding incentives." />} />
+          <Route path="/intelligence" element={<Feed category="intelligence" title="Strategic Foresight" subtitle="Gathering and analyzing data to build actionable intelligence." />} />
+          <Route path="/technology" element={<Feed category="technology" title="Technological Sovereignty" subtitle="Navigating the stack: from base protocols to biological engineering." />} />
+          <Route path="/health" element={<Feed category="health" title="Biological Resilience" subtitle="Optimizing the human hardware for longevity and performance." />} />
+          <Route path="/culture" element={<Feed category="culture" title="Narrative Control" subtitle="Analyzing the stories and signals that shape collective reality." />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/search" element={<SearchResults />} />

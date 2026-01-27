@@ -117,6 +117,10 @@ export const Dashboard: React.FC = () => {
                             >
                                 <option value="money">Sector: Money</option>
                                 <option value="business">Sector: Business</option>
+                                <option value="intelligence">Sector: Intel</option>
+                                <option value="technology">Sector: Tech</option>
+                                <option value="health">Sector: Health</option>
+                                <option value="culture">Sector: Culture</option>
                             </select>
                             <div className="h-3 w-px bg-black/10"></div>
                             <div className="flex gap-4">
