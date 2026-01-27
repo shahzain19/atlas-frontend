@@ -99,11 +99,11 @@ export const Article: React.FC = () => {
                 </header>
 
                 <div className="prose prose-neutral max-w-none 
-                    prose-headings:font-serif prose-headings:font-bold prose-headings:tracking-tight
-                    prose-p:text-neutral-700 prose-p:leading-[1.8] prose-p:text-lg
-                    prose-li:text-neutral-700 prose-li:leading-[1.8]
-                    prose-blockquote:border-l-4 prose-blockquote:border-black prose-blockquote:italic
-                    prose-img:rounded-xl">
+                    prose-headings:font-serif prose-headings:font-bold prose-headings:tracking-tight prose-headings:mt-12 prose-headings:mb-6
+                    prose-p:text-neutral-700 prose-p:leading-[1.85] prose-p:text-lg prose-p:mb-8 prose-p:tracking-tight
+                    prose-li:text-neutral-700 prose-li:leading-[1.8] prose-li:mb-4
+                    prose-blockquote:border-l-4 prose-blockquote:border-black prose-blockquote:italic prose-blockquote:my-10 prose-blockquote:pl-6
+                    prose-img:rounded-xl prose-img:my-12">
                     <ReactMarkdown>{formatBody(article.body)}</ReactMarkdown>
                 </div>
 
