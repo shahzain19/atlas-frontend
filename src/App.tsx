@@ -42,6 +42,8 @@ const Navigation = () => {
         <NavLink to="/intelligence" label="Intel" />
         <NavLink to="/technology" label="Tech" />
         <NavLink to="/health" label="Health" />
+        <NavLink to="/politics" label="Politics" />
+        <NavLink to="/logistics" label="Logistics" />
         <NavLink to="/culture" label="Culture" />
       </div>
 
@@ -117,6 +119,8 @@ function App() {
           <Route path="/intelligence" element={<Feed category="intelligence" title="Strategic Foresight" subtitle="Gathering and analyzing data to build actionable intelligence." />} />
           <Route path="/technology" element={<Feed category="technology" title="Technological Sovereignty" subtitle="Navigating the stack: from base protocols to biological engineering." />} />
           <Route path="/health" element={<Feed category="health" title="Biological Resilience" subtitle="Optimizing the human hardware for longevity and performance." />} />
+          <Route path="/politics" element={<Feed category="politics" title="Sovereign Governance" subtitle="Analyzing the structures of power, laws, and systemic control." />} />
+          <Route path="/logistics" element={<Feed category="logistics" title="Physical Reality" subtitle="Understanding supply chains, energy, and the mechanics of movement." />} />
           <Route path="/culture" element={<Feed category="culture" title="Narrative Control" subtitle="Analyzing the stories and signals that shape collective reality." />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegisterForm />} />
