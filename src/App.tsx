@@ -36,7 +36,7 @@ const Navigation = () => {
 
   return (
     <nav className="fixed top-0 w-full h-16 bg-white/70 backdrop-blur-xl border-b border-black/[0.03] flex items-center justify-between px-8 z-50">
-      <div className="flex items-center gap-6 flex-1">
+      <div className="flex items-center gap-4 flex-1">
         <NavLink to="/money" label="Money" />
         <NavLink to="/business" label="Business" />
         <NavLink to="/intelligence" label="Intel" />
@@ -44,6 +44,10 @@ const Navigation = () => {
         <NavLink to="/health" label="Health" />
         <NavLink to="/politics" label="Politics" />
         <NavLink to="/logistics" label="Logistics" />
+        <NavLink to="/security" label="Security" />
+        <NavLink to="/energy" label="Energy" />
+        <NavLink to="/science" label="Science" />
+        <NavLink to="/history" label="History" />
         <NavLink to="/culture" label="Culture" />
       </div>
 
@@ -121,6 +125,10 @@ function App() {
           <Route path="/health" element={<Feed category="health" title="Biological Resilience" subtitle="Optimizing the human hardware for longevity and performance." />} />
           <Route path="/politics" element={<Feed category="politics" title="Sovereign Governance" subtitle="Analyzing the structures of power, laws, and systemic control." />} />
           <Route path="/logistics" element={<Feed category="logistics" title="Physical Reality" subtitle="Understanding supply chains, energy, and the mechanics of movement." />} />
+          <Route path="/security" element={<Feed category="security" title="Defensive Protocols" subtitle="Hardening the perimeter: physical security and digital encryption." />} />
+          <Route path="/energy" element={<Feed category="energy" title="Systemic Power" subtitle="Analyzing energy production, thermodynamics, and resource sovereignty." />} />
+          <Route path="/science" element={<Feed category="science" title="First Principles" subtitle="Exploring the fundamental laws of nature and the scientific method." />} />
+          <Route path="/history" element={<Feed category="history" title="Pattern Recognition" subtitle="Decoding the past to identify recurring systemic cycles." />} />
           <Route path="/culture" element={<Feed category="culture" title="Narrative Control" subtitle="Analyzing the stories and signals that shape collective reality." />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegisterForm />} />
