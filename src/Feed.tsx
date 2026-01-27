@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { api } from './api';
+import { formatBody } from './utils/format';
 
 interface FeedProps {
     category: string;
@@ -38,8 +39,8 @@ export const Feed: React.FC<FeedProps> = ({ category, title, subtitle }) => {
                             </Link>
                             <span className="text-[10px] uppercase font-mono text-neutral-300">{new Date(item.created_at).toLocaleDateString()}</span>
                         </div>
-                        <div className="prose prose-neutral max-w-none prose-headings:font-serif prose-headings:font-bold prose-p:font-medium prose-p:text-neutral-600 prose-li:text-neutral-600">
-                            <ReactMarkdown>{item.body}</ReactMarkdown>
+                        <div className="prose prose-neutral max-w-none prose-headings:font-serif prose-headings:font-bold prose-p:font-sans prose-p:text-neutral-600 prose-li:font-sans prose-li:text-neutral-600">
+                            <ReactMarkdown>{formatBody(item.body)}</ReactMarkdown>
                         </div>
                     </article>
                 ))}

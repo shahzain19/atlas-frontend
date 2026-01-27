@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { SEOHead } from './components/SEO/SEOHead';
 import { api } from './api';
+import { formatBody } from './utils/format';
 
 export const Article: React.FC = () => {
     const { id } = useParams();
@@ -89,8 +90,8 @@ export const Article: React.FC = () => {
                     )}
                 </header>
 
-                <div className="prose prose-lg prose-neutral max-w-none prose-headings:font-serif prose-headings:font-bold prose-p:font-medium prose-p:text-neutral-600 prose-li:text-neutral-600 leading-relaxed">
-                    <ReactMarkdown>{article.body}</ReactMarkdown>
+                <div className="prose prose-lg prose-neutral max-w-none prose-headings:font-serif prose-headings:font-bold prose-p:font-sans prose-p:text-neutral-600 prose-li:font-sans prose-li:text-neutral-600 leading-relaxed">
+                    <ReactMarkdown>{formatBody(article.body)}</ReactMarkdown>
                 </div>
 
                 {/* Tags */}
