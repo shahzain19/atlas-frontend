@@ -18,7 +18,7 @@ const NavLink = ({ to, label }: { to: string, label: string }) => {
   return (
     <Link
       to={to}
-      className={`text-xs font-bold uppercase tracking-widest transition-colors ${isActive ? 'text-black' : 'text-neutral-400 hover:text-black'
+      className={`text-[10px] font-bold uppercase tracking-[0.2em] transition-all duration-300 ${isActive ? 'text-black' : 'text-neutral-400 hover:text-black hover:tracking-[0.3em]'
         }`}
     >
       {label}
@@ -35,44 +35,46 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="fixed top-0 w-full h-16 bg-white/90 backdrop-blur-sm border-b border-black/5 flex items-center justify-between px-6 z-50">
-      <div className="flex items-center gap-12">
+    <nav className="fixed top-0 w-full h-16 bg-white/70 backdrop-blur-xl border-b border-black/[0.03] flex items-center justify-between px-8 z-50">
+      <div className="flex items-center gap-8 flex-1">
         <NavLink to="/money" label="Money" />
         <NavLink to="/business" label="Business" />
-        <span className="text-black font-black text-xl px-4">ATLAS</span>
-        {(user?.role === 'admin' || user?.role === 'contributor') && (
-          <NavLink to="/dashboard" label="Create" />
-        )}
-        {user?.role === 'admin' && (
-          <NavLink to="/admin/users" label="Users" />
-        )}
       </div>
 
-      <div className="flex items-center gap-4">
-        <SearchBar className="w-64" />
+      <Link to="/" className="text-black font-serif font-black text-2xl tracking-tighter hover:opacity-70 transition-opacity">
+        ATLAS
+      </Link>
+
+      <div className="flex items-center justify-end gap-6 flex-1">
+        <SearchBar className="max-w-[180px]" />
+
+        <div className="h-4 w-px bg-black/5 mx-2"></div>
 
         {isAuthenticated ? (
-          <div className="flex items-center gap-4">
-            <span className="text-xs text-neutral-500">
-              {user?.username} <span className="text-neutral-300">({user?.role})</span>
-            </span>
+          <div className="flex items-center gap-6">
+            {(user?.role === 'admin' || user?.role === 'contributor') && (
+              <NavLink to="/dashboard" label="Write" />
+            )}
+            {user?.role === 'admin' && (
+              <NavLink to="/admin/users" label="Users" />
+            )}
             <button
               onClick={handleLogout}
-              className="text-xs font-bold uppercase tracking-widest text-neutral-400 hover:text-black"
+              className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400 hover:text-black transition-colors"
             >
-              Logout
+              Sign Out
             </button>
           </div>
         ) : (
-          <>
-            <NavLink to="/login" label="Login" />
+          <div className="flex items-center gap-6">
+            <NavLink to="/login" label="Entry" />
             <Link
               to="/register"
-              className="px-4 py-2 bg-black text-white rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-neutral-800"
+              className="text-[10px] font-bold uppercase tracking-[0.2em] px-4 py-2 border border-black/10 rounded-full hover:bg-black hover:text-white transition-all"
             >
-              Register
+              Access
             </Link>
-          </>
+          </div>
         )}
       </div>
     </nav>
