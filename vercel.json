@@ -1,6 +1,14 @@
 {
     "rewrites": [
         {
+            "source": "/sitemap.xml",
+            "destination": "https://atlas-backend-npbs.vercel.app/sitemap.xml"
+        },
+        {
+            "source": "/robots.txt",
+            "destination": "https://atlas-backend-npbs.vercel.app/robots.txt"
+        },
+        {
             "source": "/(.*)",
             "destination": "/index.html"
         }
