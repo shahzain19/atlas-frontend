@@ -15,8 +15,8 @@ interface SEOHeadProps {
     noIndex?: boolean;
 }
 
-const DOMAIN = 'https://atlas.com'; // Replace with actual domain in production
-const DEFAULT_IMAGE = '/og-image.jpg'; // Needs to be created/added to public
+const DOMAIN = 'https://atlas-frontend-omega.vercel.app';
+const DEFAULT_IMAGE = '/og-image.png'; // Updated to match index.html
 const SITE_TITLE = 'Atlas';
 
 export const SEOHead: React.FC<SEOHeadProps> = ({

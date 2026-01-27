@@ -1,15 +1,20 @@
 @import "tailwindcss";
 
+/*
+  ATLAS DESIGN SYSTEM (Tailwind CSS v4)
+  Note: @theme is a standard Tailwind v4 directive.
+  If your IDE shows a lint error, it is likely a false positive.
+*/
 @theme {
-    --font-sans: "Inter", ui-sans-serif, system-ui;
-    --font-serif: "Playfair Display", ui-serif, Georgia, serif;
-    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+    --font-inter: "Inter", sans-serif;
+    --font-serif: "Playfair Display", serif;
+    --font-mono: "JetBrains Mono", monospace;
 }
 
-:root {
-    font-family: var(--font-sans);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+/* Global Base Styles */
+body {
+    font-family: var(--font-inter);
+    @apply bg-white text-neutral-900 antialiased selection:bg-emerald-100 selection:text-emerald-900;
 }
 
 /* Base typography for specific components */
@@ -21,18 +26,37 @@ h4 {
 }
 
 .article-content {
-    font-family: var(--font-sans);
+    font-family: var(--font-inter);
 }
 
-/* Drop cap for first paragraph */
+/* Premium Drop Cap for Archive Nodes */
 .prose>p:first-of-type::first-letter {
     float: left;
     font-family: var(--font-serif);
-    font-size: 4.5rem;
-    line-height: 1;
+    font-size: 5rem;
+    line-height: 0.8;
     font-weight: 900;
-    padding-right: 0.75rem;
-    padding-top: 0.25rem;
+    padding-right: 1.25rem;
+    padding-top: 0.75rem;
     color: #10b981;
     /* emerald-500 */
+    text-shadow: 2px 2px 0px rgba(16, 185, 129, 0.1);
+}
+
+/* Custom Scrollbar for Intelligence Studio */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.1);
 }
