@@ -36,23 +36,29 @@ const Navigation = () => {
 
   return (
     <nav className="fixed top-0 w-full h-16 bg-white/70 backdrop-blur-xl border-b border-black/[0.03] flex items-center justify-between px-8 z-50">
-      <div className="flex items-center gap-3 flex-1">
-        <NavLink to="/money" label="Money" />
-        <NavLink to="/business" label="Business" />
-        <NavLink to="/intelligence" label="Intel" />
-        <NavLink to="/technology" label="Tech" />
-        <NavLink to="/health" label="Health" />
-        <NavLink to="/politics" label="Politics" />
-        <NavLink to="/logistics" label="Logistics" />
-        <NavLink to="/security" label="Security" />
-        <NavLink to="/energy" label="Energy" />
-        <NavLink to="/science" label="Science" />
-        <NavLink to="/history" label="History" />
-        <NavLink to="/philosophy" label="Phil" />
-        <NavLink to="/law" label="Law" />
-        <NavLink to="/psychology" label="Psych" />
-        <NavLink to="/environment" label="Env" />
-        <NavLink to="/culture" label="Culture" />
+      <div className="flex-1 flex items-center overflow-x-auto no-scrollbar py-2 -my-2 mr-4">
+        <div className="flex items-center gap-6 whitespace-nowrap px-4">
+          <NavLink to="/money" label="Money" />
+          <NavLink to="/business" label="Business" />
+          <NavLink to="/intelligence" label="Intel" />
+          <NavLink to="/technology" label="Tech" />
+          <NavLink to="/health" label="Health" />
+          <NavLink to="/politics" label="Politics" />
+          <NavLink to="/logistics" label="Logistics" />
+          <NavLink to="/security" label="Security" />
+          <NavLink to="/energy" label="Energy" />
+          <NavLink to="/science" label="Science" />
+          <NavLink to="/history" label="History" />
+          <NavLink to="/philosophy" label="Phil" />
+          <NavLink to="/law" label="Law" />
+          <NavLink to="/psychology" label="Psych" />
+          <NavLink to="/environment" label="Env" />
+          <NavLink to="/strategy" label="Strategy" />
+          <NavLink to="/economics" label="Econ" />
+          <NavLink to="/geopolitics" label="Geo" />
+          <NavLink to="/engineering" label="Eng" />
+          <NavLink to="/culture" label="Culture" />
+        </div>
       </div>
 
       <Link to="/" className="text-black font-serif font-black text-2xl tracking-tighter hover:opacity-70 transition-opacity">
@@ -137,6 +143,10 @@ function App() {
           <Route path="/law" element={<Feed category="law" title="Systemic Codes" subtitle="Navigating legal structures, contracts, and jurisdictional resilience." />} />
           <Route path="/psychology" element={<Feed category="psychology" title="Cognitive OS" subtitle="Understanding the human operating system and behavioral patterns." />} />
           <Route path="/environment" element={<Feed category="environment" title="Ecological Sovereignty" subtitle="Sustaining the habitat and managing natural assets for the long term." />} />
+          <Route path="/strategy" element={<Feed category="strategy" title="Game Theory" subtitle="Analyzing incentives, competition, and optimal decision-making." />} />
+          <Route path="/economics" element={<Feed category="economics" title="Universal Incentives" subtitle="Deciphering the allocation of scarce resources and human behavior." />} />
+          <Route path="/geopolitics" element={<Feed category="geopolitics" title="Global Statics" subtitle="Mapping the intersection of geography, power, and statecraft." />} />
+          <Route path="/engineering" element={<Feed category="engineering" title="Physical Syntax" subtitle="Building the systems and structures that command the physical world." />} />
           <Route path="/culture" element={<Feed category="culture" title="Narrative Control" subtitle="Analyzing the stories and signals that shape collective reality." />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegisterForm />} />

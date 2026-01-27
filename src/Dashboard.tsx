@@ -130,6 +130,10 @@ export const Dashboard: React.FC = () => {
                                 <option value="law">Sector: Law</option>
                                 <option value="psychology">Sector: Psych</option>
                                 <option value="environment">Sector: Env</option>
+                                <option value="strategy">Sector: Strategy</option>
+                                <option value="economics">Sector: Econ</option>
+                                <option value="geopolitics">Sector: Geo</option>
+                                <option value="engineering">Sector: Eng</option>
                                 <option value="culture">Sector: Culture</option>
                             </select>
                             <div className="h-3 w-px bg-black/10"></div>
