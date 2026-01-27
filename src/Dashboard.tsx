@@ -3,7 +3,6 @@ import ReactMarkdown from 'react-markdown';
 import { api } from './api';
 import { TagManager } from './components/Tags/TagManager';
 import { useAuthStore } from './store/authStore';
-import { useNavigate } from 'react-router-dom';
 import { SEOHead } from './components/SEO/SEOHead';
 import { APIKeyManager } from './components/Settings/APIKeyManager';
 
@@ -15,7 +14,6 @@ interface Source {
 }
 
 export const Dashboard: React.FC = () => {
-    const navigate = useNavigate();
     const user = useAuthStore((state) => state.user);
     const [title, setTitle] = useState('');
     const [category, setCategory] = useState('money');
