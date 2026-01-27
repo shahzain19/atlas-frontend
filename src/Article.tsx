@@ -162,7 +162,7 @@ export const Article: React.FC = () => {
 
                     {/* View Count & ID */}
                     <div className="flex justify-between items-center text-[9px] uppercase tracking-[0.2em] font-mono text-neutral-300">
-                        <span>Archive Node: {article.id.split('-')[0]}</span>
+                        <span>Archive Node: {String(article.id).split('-')[0]}</span>
                         <span>Retrievals: {article.view_count || 0}</span>
                     </div>
                 </footer>
