@@ -55,7 +55,7 @@ export const Article: React.FC = () => {
     };
 
     return (
-        <div className="max-w-3xl mx-auto p-10 min-h-screen">
+        <div className="max-w-2xl mx-auto px-6 py-16 md:py-24 min-h-screen">
             <SEOHead
                 title={article.title}
                 description={article.body.substring(0, 160).replace(/[#*`]/g, '')}
@@ -67,92 +67,105 @@ export const Article: React.FC = () => {
                 structuredData={structuredData}
             />
 
-            <Link to={`/${article.category}`} className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 hover:text-black mb-8 block transition-colors">
-                ← Back to {article.category}
+            <Link to={`/${article.category}`} className="group text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400 hover:text-black mb-12 inline-flex items-center gap-2 transition-all">
+                <span className="group-hover:-translate-x-1 transition-transform">←</span> {article.category}
             </Link>
 
-            <article className="animate-in fade-in slide-in-from-bottom-4 duration-700">
-                <header className="mb-12 border-b border-black/5 pb-8">
-                    <div className="flex justify-between items-start mb-6">
-                        <span className="text-xs font-bold uppercase tracking-widest text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">
-                            {article.category} Protocol
+            <article className="animate-in fade-in slide-in-from-bottom-2 duration-1000">
+                <header className="mb-16">
+                    <div className="flex items-center gap-4 mb-8">
+                        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-600 border border-emerald-600/20 px-2 py-0.5 rounded">
+                            {article.category}
                         </span>
+                        <div className="h-px flex-1 bg-black/5"></div>
                         <span className="text-[10px] uppercase font-mono text-neutral-300">
-                            ID: {article.id} • {new Date(article.created_at).toLocaleDateString()}
+                            {new Date(article.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
                         </span>
                     </div>
-                    <h1 className="text-5xl md:text-6xl font-serif font-black leading-tight mb-6">{article.title}</h1>
+
+                    <h1 className="text-4xl md:text-6xl font-serif font-black leading-[1.1] tracking-tight mb-8">{article.title}</h1>
 
                     {article.author_name && (
-                        <p className="text-sm text-neutral-500">
-                            By <span className="font-bold">{article.author_name}</span>
-                        </p>
+                        <div className="flex items-center gap-3">
+                            <div className="w-6 h-6 rounded-full bg-neutral-100 flex items-center justify-center text-[10px] font-bold text-neutral-400">
+                                {article.author_name[0].toUpperCase()}
+                            </div>
+                            <p className="text-sm text-neutral-500">
+                                <span className="text-neutral-300 mr-1">Collected by</span>
+                                <span className="font-bold text-neutral-900">{article.author_name}</span>
+                            </p>
+                        </div>
                     )}
                 </header>
 
-                <div className="prose prose-lg prose-neutral max-w-none prose-headings:font-serif prose-headings:font-bold prose-p:font-sans prose-p:text-neutral-600 prose-li:font-sans prose-li:text-neutral-600 leading-relaxed">
+                <div className="prose prose-neutral max-w-none 
+                    prose-headings:font-serif prose-headings:font-bold prose-headings:tracking-tight
+                    prose-p:text-neutral-700 prose-p:leading-[1.8] prose-p:text-lg
+                    prose-li:text-neutral-700 prose-li:leading-[1.8]
+                    prose-blockquote:border-l-4 prose-blockquote:border-black prose-blockquote:italic
+                    prose-img:rounded-xl">
                     <ReactMarkdown>{formatBody(article.body)}</ReactMarkdown>
                 </div>
 
-                {/* Tags */}
-                {article.tags && article.tags.length > 0 && (
-                    <div className="mt-12 pt-8 border-t border-black/10">
-                        <p className="text-xs font-bold uppercase tracking-widest text-neutral-500 mb-4">Tags</p>
-                        <div className="flex flex-wrap gap-2">
-                            {article.tags.map((tag: any) => (
-                                <span
-                                    key={tag.id}
-                                    className="px-3 py-1 bg-neutral-100 border border-black/10 rounded-full text-sm hover:bg-black hover:text-white transition-colors cursor-pointer"
-                                >
-                                    {tag.name}
-                                </span>
-                            ))}
+                {/* Footer Metadata */}
+                <footer className="mt-20 pt-12 border-t border-black/5 space-y-12">
+                    {/* Tags */}
+                    {article.tags && article.tags.length > 0 && (
+                        <div>
+                            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-neutral-400 mb-6">Taxonomy</p>
+                            <div className="flex flex-wrap gap-2">
+                                {article.tags.map((tag: any) => (
+                                    <span
+                                        key={tag.id}
+                                        className="px-3 py-1 bg-neutral-50 border border-black/5 rounded text-[11px] font-bold uppercase tracking-wider text-neutral-500 hover:bg-black hover:text-white transition-all cursor-pointer"
+                                    >
+                                        #{tag.name}
+                                    </span>
+                                ))}
+                            </div>
                         </div>
-                    </div>
-                )}
+                    )}
 
-                {/* Sources */}
-                {article.sources && article.sources.length > 0 && (
-                    <div className="mt-8">
-                        <p className="text-xs font-bold uppercase tracking-widest text-neutral-500 mb-4">Sources & Citations</p>
-                        <div className="space-y-3">
-                            {article.sources.map((source: any) => (
-                                <div key={source.id} className="p-4 bg-neutral-50 rounded-lg border border-black/5">
-                                    <div className="flex items-start justify-between">
-                                        <div className="flex-1">
-                                            <div className="font-medium text-sm mb-1">{source.title}</div>
-                                            {source.author && (
-                                                <div className="text-xs text-neutral-500 mb-1">by {source.author}</div>
-                                            )}
-                                            {source.url && (
-                                                <a
-                                                    href={source.url}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="text-xs text-blue-600 hover:underline break-all"
-                                                >
-                                                    {source.url}
-                                                </a>
+                    {/* Sources */}
+                    {article.sources && article.sources.length > 0 && (
+                        <div>
+                            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-neutral-400 mb-6">Intelligence Sources</p>
+                            <div className="grid gap-4">
+                                {article.sources.map((source: any) => (
+                                    <div key={source.id} className="p-4 bg-neutral-50/50 border border-black/5 group hover:border-black/10 transition-colors">
+                                        <div className="flex items-start justify-between">
+                                            <div className="flex-1">
+                                                <div className="font-bold text-sm mb-1">{source.title}</div>
+                                                {source.author && (
+                                                    <div className="text-xs text-neutral-500 mb-2 uppercase tracking-wide font-medium">Source: {source.author}</div>
+                                                )}
+                                                {source.url && (
+                                                    <a
+                                                        href={source.url}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="text-[11px] text-blue-500 hover:text-blue-700 transition-colors break-all font-mono"
+                                                    >
+                                                        {source.url}
+                                                    </a>
+                                                )}
+                                            </div>
+                                            {source.verified && (
+                                                <div className="w-2 h-2 rounded-full bg-emerald-500 mt-1.5" title="Verified Source"></div>
                                             )}
                                         </div>
-                                        {source.verified && (
-                                            <span className="text-xs px-2 py-1 bg-green-100 text-green-700 rounded-full ml-3">
-                                                Verified
-                                            </span>
-                                        )}
                                     </div>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
                         </div>
-                    </div>
-                )}
+                    )}
 
-                {/* View Count */}
-                <div className="mt-8 pt-6 border-t border-black/10">
-                    <p className="text-xs font-mono text-neutral-400">
-                        Views: {article.view_count || 0}
-                    </p>
-                </div>
+                    {/* View Count & ID */}
+                    <div className="flex justify-between items-center text-[9px] uppercase tracking-[0.2em] font-mono text-neutral-300">
+                        <span>Archive Node: {article.id.split('-')[0]}</span>
+                        <span>Retrievals: {article.view_count || 0}</span>
+                    </div>
+                </footer>
             </article>
         </div>
     );
