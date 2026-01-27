@@ -5,6 +5,12 @@ import { SEOHead } from './components/SEO/SEOHead';
 import { api } from './api';
 import { formatBody } from './utils/format';
 
+const calculateReadingTime = (text: string) => {
+    const wordsPerMinute = 200;
+    const words = text.split(/\s+/).length;
+    return Math.ceil(words / wordsPerMinute);
+};
+
 export const Article: React.FC = () => {
     const { id } = useParams();
     const [article, setArticle] = useState<any>(null);
@@ -74,12 +80,15 @@ export const Article: React.FC = () => {
             <article className="animate-in fade-in slide-in-from-bottom-2 duration-1000">
                 <header className="mb-16">
                     <div className="flex items-center gap-4 mb-8">
-                        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-600 border border-emerald-600/20 px-2 py-0.5 rounded">
-                            {article.category}
+                        <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-emerald-600 border border-emerald-600/20 px-2 py-0.5 rounded">
+                            {article.category} Protocol
                         </span>
-                        <div className="h-px flex-1 bg-black/5"></div>
+                        <div className="h-px flex-1 bg-black/[0.03]"></div>
                         <span className="text-[10px] uppercase font-mono text-neutral-300">
                             {new Date(article.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
+                        </span>
+                        <span className="text-[10px] uppercase font-mono text-neutral-300">
+                            • {calculateReadingTime(article.body)} min read
                         </span>
                     </div>
 
@@ -99,11 +108,11 @@ export const Article: React.FC = () => {
                 </header>
 
                 <div className="prose prose-neutral max-w-none 
-                    prose-headings:font-serif prose-headings:font-bold prose-headings:tracking-tight prose-headings:mt-12 prose-headings:mb-6
-                    prose-p:text-neutral-700 prose-p:leading-[1.85] prose-p:text-lg prose-p:mb-8 prose-p:tracking-tight
-                    prose-li:text-neutral-700 prose-li:leading-[1.8] prose-li:mb-4
-                    prose-blockquote:border-l-4 prose-blockquote:border-black prose-blockquote:italic prose-blockquote:my-10 prose-blockquote:pl-6
-                    prose-img:rounded-xl prose-img:my-12">
+                    prose-headings:font-serif prose-headings:font-black prose-headings:tracking-tight prose-headings:mt-16 prose-headings:mb-8
+                    prose-p:text-neutral-800 prose-p:leading-[1.95] prose-p:text-[1.1rem] prose-p:mb-10 prose-p:tracking-tight
+                    prose-li:text-neutral-800 prose-li:leading-[1.9] prose-li:mb-4
+                    prose-blockquote:border-l-2 prose-blockquote:border-emerald-500 prose-blockquote:italic prose-blockquote:my-12 prose-blockquote:pl-8 prose-blockquote:text-neutral-500 prose-blockquote:text-xl
+                    prose-img:rounded-2xl prose-img:my-16 prose-img:shadow-2xl">
                     <ReactMarkdown>{formatBody(article.body)}</ReactMarkdown>
                 </div>
 

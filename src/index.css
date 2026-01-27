@@ -18,9 +18,21 @@ h2,
 h3,
 h4 {
     font-family: var(--font-serif);
-    font-size: large;
 }
 
 .article-content {
     font-family: var(--font-sans);
+}
+
+/* Drop cap for first paragraph */
+.prose>p:first-of-type::first-letter {
+    float: left;
+    font-family: var(--font-serif);
+    font-size: 4.5rem;
+    line-height: 1;
+    font-weight: 900;
+    padding-right: 0.75rem;
+    padding-top: 0.25rem;
+    color: #10b981;
+    /* emerald-500 */
 }

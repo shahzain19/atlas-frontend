@@ -4,7 +4,7 @@
 /**
  * Intelligently splits a long string into paragraphs at sentence boundaries.
  */
-const splitMassiveBlock = (text: string, maxChars = 450): string => {
+const splitMassiveBlock = (text: string, maxChars = 600): string => {
     if (text.length <= maxChars) return text;
 
     // Find a good split point near the cap (sentence end)
