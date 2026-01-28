@@ -38,12 +38,19 @@ const categories = [
   { path: '/culture', category: 'culture', title: 'Narrative Control', subtitle: 'Analyzing the stories and signals that shape collective reality.' },
 ];
 
-// Read the base index.html template
-const indexTemplate = fs.readFileSync(path.resolve(__dirname, '../index.html'), 'utf-8');
+// Read the Vite-built index.html template (not the source)
+const getIndexTemplate = () => {
+  const builtIndexPath = path.resolve(DIST_DIR, 'index.html');
+  if (!fs.existsSync(builtIndexPath)) {
+    throw new Error('Built index.html not found. Run vite build first.');
+  }
+  return fs.readFileSync(builtIndexPath, 'utf-8');
+};
 
 // Function to generate category page HTML
 function generateCategoryHTML(category, title, subtitle) {
-  return indexTemplate.replace(
+  const template = getIndexTemplate();
+  return template.replace(
     '<title>Atlas Blog — Deep Research, Analysis & Knowledge Systems</title>',
     `<title>Atlas ${title} — ${category.charAt(0).toUpperCase() + category.slice(1)} Research & Analysis</title>`
   ).replace(
@@ -54,6 +61,7 @@ function generateCategoryHTML(category, title, subtitle) {
 
 // Function to generate article HTML with content
 async function generateArticleHTML(article) {
+  const template = getIndexTemplate();
   const articleTitle = `${article.title} — Atlas ${article.category.charAt(0).toUpperCase() + article.category.slice(1)} Research`;
   const articleDescription = article.body.substring(0, 160).replace(/[#*`]/g, '').trim();
   
@@ -85,7 +93,7 @@ async function generateArticleHTML(article) {
     "keywords": article.tags ? article.tags.map(t => t.name).join(", ") : ""
   };
 
-  return indexTemplate
+  return template
     .replace(
       '<title>Atlas Blog — Deep Research, Analysis & Knowledge Systems</title>',
       `<title>${articleTitle}</title>`
@@ -122,16 +130,20 @@ async function buildSSG() {
   try {
     // Ensure dist directory exists
     if (!fs.existsSync(DIST_DIR)) {
-      fs.mkdirSync(DIST_DIR, { recursive: true });
+      console.error('❌ Dist directory not found. Run vite build first.');
+      process.exit(1);
     }
 
-    // Generate category pages
+    // Generate category pages (skip homepage since it's already built)
     console.log('📄 Generating category pages...');
     for (const { path: categoryPath, category, title, subtitle } of categories) {
+      if (categoryPath === '/') {
+        console.log('✅ Skipped: / (already built by Vite)');
+        continue; // Skip homepage, it's already built by Vite
+      }
+      
       const html = generateCategoryHTML(category, title, subtitle);
-      const outputPath = categoryPath === '/' ? 
-        path.join(DIST_DIR, 'index.html') : 
-        path.join(DIST_DIR, categoryPath.slice(1), 'index.html');
+      const outputPath = path.join(DIST_DIR, categoryPath.slice(1), 'index.html');
       
       // Create directory if it doesn't exist
       const dir = path.dirname(outputPath);
@@ -169,7 +181,7 @@ async function buildSSG() {
     }
 
     console.log('🎉 SSG Build Complete!');
-    console.log(`📊 Generated ${categories.length} category pages + ${articles.length} article pages`);
+    console.log(`📊 Generated ${categories.length - 1} category pages + ${articles.length} article pages`);
     
   } catch (error) {
     console.error('❌ SSG Build failed:', error);
