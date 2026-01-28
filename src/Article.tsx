@@ -133,9 +133,9 @@ export const Article: React.FC = () => {
                 <div className="prose prose-neutral max-w-none 
                     prose-headings:font-serif prose-headings:font-black prose-headings:tracking-tight prose-headings:mt-16 prose-headings:mb-8 prose-headings:scroll-mt-24
                     prose-h2:text-3xl prose-h3:text-2xl prose-h4:text-xl
-                    prose-p:text-neutral-800 prose-p:leading-[1.75] prose-p:text-[1.125rem] prose-p:mb-8 prose-p:tracking-tight prose-p:max-w-[75ch]
-                    prose-li:text-neutral-800 prose-li:leading-[1.75] prose-li:mb-3 prose-li:text-[1.125rem]
-                    prose-blockquote:border-l-2 prose-blockquote:border-emerald-500 prose-blockquote:italic prose-blockquote:my-12 prose-blockquote:pl-8 prose-blockquote:text-neutral-600 prose-blockquote:text-xl prose-blockquote:leading-relaxed
+                    prose-p:mb-8 prose-p:tracking-tight prose-p:max-w-[75ch]
+                    prose-li:mb-3
+                    prose-blockquote:border-l-2 prose-blockquote:border-emerald-500 prose-blockquote:italic prose-blockquote:my-12 prose-blockquote:pl-8 prose-blockquote:text-xl prose-blockquote:leading-relaxed
                     prose-img:rounded-2xl prose-img:my-16 prose-img:shadow-2xl prose-img:w-full
                     prose-code:bg-neutral-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono
                     prose-pre:bg-neutral-900 prose-pre:text-neutral-100 prose-pre:rounded-xl prose-pre:p-6 prose-pre:overflow-x-auto
