@@ -5,6 +5,7 @@ import { SEOHead } from './components/SEO/SEOHead';
 import { TableOfContents } from './components/TableOfContents';
 import { RelatedPosts } from './components/RelatedPosts';
 import { Breadcrumbs } from './components/Breadcrumbs';
+import { ReadingProgress } from './components/ReadingProgress';
 import { api } from './api';
 import { formatBody } from './utils/format';
 
@@ -72,6 +73,7 @@ export const Article: React.FC = () => {
 
     return (
         <div className="max-w-4xl mx-auto px-6 py-16 md:py-24 min-h-screen">
+            <ReadingProgress />
             <SEOHead
                 title={article.title}
                 description={article.body.substring(0, 160).replace(/[#*`]/g, '')}
