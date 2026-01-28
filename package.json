@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && node scripts/build-ssg.js",
+    "build:ssg": "node scripts/build-ssg.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -22,11 +23,12 @@
     "react-markdown": "^10.1.0",
     "react-router-dom": "^7.13.0",
     "tailwindcss": "^4.1.18",
+    "vite-plugin-ssg": "^0.1.0",
     "zustand": "^5.0.10"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
-    "@types/node": "^24.10.1",
+    "@types/node": "^24.10.9",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",

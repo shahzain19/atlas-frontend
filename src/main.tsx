@@ -4,10 +4,25 @@ import { HelmetProvider } from 'react-helmet-async'
 import App from './App.tsx'
 import './index.css'
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+// SSG support
+if (typeof window !== 'undefined') {
+  // Client-side rendering
+  ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-        <HelmetProvider>
-            <App />
-        </HelmetProvider>
+      <HelmetProvider>
+        <App />
+      </HelmetProvider>
     </React.StrictMode>,
-)
+  )
+}
+
+// Export for SSG
+export default function render() {
+  return (
+    <React.StrictMode>
+      <HelmetProvider>
+        <App />
+      </HelmetProvider>
+    </React.StrictMode>
+  )
+}
