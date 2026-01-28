@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { Dashboard } from './Dashboard';
 import { Feed } from './Feed';
+import { Landing } from './Landing';
 import { Article } from './Article';
 import { LoginForm } from './components/Auth/LoginForm';
 import { RegisterForm } from './components/Auth/RegisterForm';
@@ -203,7 +204,7 @@ function App() {
         {showOnboarding && <Onboarding onComplete={handleOnboardingComplete} />}
 
         <Routes>
-          <Route path="/" element={<Feed category="money" title="Sovereign Finance" subtitle="Understanding the flow of value and the mechanics of debt." />} />
+          <Route path="/" element={<Landing />} />
           <Route path="/money" element={<Feed category="money" title="Sovereign Finance" subtitle="Understanding the flow of value and the mechanics of debt." />} />
           <Route path="/business" element={<Feed category="business" title="Systemic Leverage" subtitle="Building scalable operations and understanding incentives." />} />
           <Route path="/intelligence" element={<Feed category="intelligence" title="Strategic Foresight" subtitle="Gathering and analyzing data to build actionable intelligence." />} />

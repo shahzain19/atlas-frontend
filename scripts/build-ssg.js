@@ -11,7 +11,6 @@ const DIST_DIR = path.resolve(__dirname, '../dist');
 
 // Categories with their metadata
 const categories = [
-  { path: '/', category: 'money', title: 'Sovereign Finance', subtitle: 'Understanding the flow of value and the mechanics of debt.' },
   { path: '/money', category: 'money', title: 'Sovereign Finance', subtitle: 'Understanding the flow of value and the mechanics of debt.' },
   { path: '/business', category: 'business', title: 'Systemic Leverage', subtitle: 'Building scalable operations and understanding incentives.' },
   { path: '/intelligence', category: 'intelligence', title: 'Strategic Foresight', subtitle: 'Gathering and analyzing data to build actionable intelligence.' },
@@ -134,13 +133,9 @@ async function buildSSG() {
       process.exit(1);
     }
 
-    // Generate category pages (skip homepage since it's already built)
+    // Generate category pages (homepage is now Landing component, handled by Vite)
     console.log('📄 Generating category pages...');
     for (const { path: categoryPath, category, title, subtitle } of categories) {
-      if (categoryPath === '/') {
-        console.log('✅ Skipped: / (already built by Vite)');
-        continue; // Skip homepage, it's already built by Vite
-      }
       
       const html = generateCategoryHTML(category, title, subtitle);
       const outputPath = path.join(DIST_DIR, categoryPath.slice(1), 'index.html');
@@ -181,7 +176,7 @@ async function buildSSG() {
     }
 
     console.log('🎉 SSG Build Complete!');
-    console.log(`📊 Generated ${categories.length - 1} category pages + ${articles.length} article pages`);
+    console.log(`📊 Generated ${categories.length} category pages + ${articles.length} article pages + 1 landing page`);
     
   } catch (error) {
     console.error('❌ SSG Build failed:', error);

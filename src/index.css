@@ -311,3 +311,70 @@ textarea:focus {
     /* Dark mode styles disabled for now to avoid conflicts */
     /* Will be implemented in future version */
 }
+
+/* ═══════════════════════════════════════════════════════════════════════ */
+/* 🏠 LANDING PAGE ENHANCEMENTS                                            */
+/* ═══════════════════════════════════════════════════════════════════════ */
+
+/* Line clamp utility for text truncation */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Gradient text effect for hero */
+.gradient-text {
+    background: linear-gradient(135deg, #10b981, #059669);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Animated background pattern */
+.pattern-dots {
+    background-image: radial-gradient(circle, #10b981 1px, transparent 1px);
+    background-size: 20px 20px;
+    animation: pattern-move 20s linear infinite;
+}
+
+@keyframes pattern-move {
+    0% { background-position: 0 0; }
+    100% { background-position: 20px 20px; }
+}
+
+/* Hover effects for cards */
+.card-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+    transform: translateY(-4px);
+}
+
+/* Custom scrollbar for landing sections */
+.landing-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.landing-scroll::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 3px;
+}
+
+.landing-scroll::-webkit-scrollbar-thumb {
+    background: #10b981;
+    border-radius: 3px;
+}
+
+.landing-scroll::-webkit-scrollbar-thumb:hover {
+    background: #059669;
+}
