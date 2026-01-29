@@ -87,9 +87,9 @@ export const Landing: React.FC = () => {
       </Helmet>
 
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-neutral-50 to-white">
-        <div className="relative max-w-6xl mx-auto px-6 py-32 md:py-48 text-center">
-          <div className="flex items-center justify-center gap-3 mb-8">
+      <section className="relative overflow-hidden bg-gradient-to-br from-neutral-50 to-white pattern-dots">
+        <div className="relative max-w-6xl mx-auto px-6 py-28 md:py-44 text-center">
+          <div className="flex items-center justify-center gap-3 mb-6">
             <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-neutral-400">
               Autonomous Research Engine
@@ -97,19 +97,19 @@ export const Landing: React.FC = () => {
             <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
           </div>
 
-          <h1 className="text-7xl md:text-9xl font-serif font-black tracking-tighter mb-12 text-neutral-900 leading-[0.85]">
+          <h1 className="text-6xl md:text-8xl font-serif font-black tracking-tighter mb-8 gradient-text leading-[0.9]">
             ATLAS
           </h1>
 
-          <p className="text-2xl md:text-3xl font-serif italic text-neutral-600 mb-10 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-2xl font-serif italic text-neutral-600 mb-8 max-w-3xl mx-auto leading-relaxed">
             Sovereign intelligence for serious thinkers. Deep research, automation-driven publishing,
             and systems analysis across high-impact domains.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-10">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
             <Link
               to="/technology"
-              className="group px-8 py-4 bg-emerald-600 text-white font-bold text-sm uppercase tracking-[0.2em] rounded-full hover:bg-emerald-700 hover:scale-105 transition-all duration-300 shadow-xl shadow-emerald-600/20"
+              className="group px-7 py-3 bg-emerald-600 text-white font-bold text-sm uppercase tracking-[0.12em] rounded-full hover:bg-emerald-700 hover:scale-105 transition-all duration-300 shadow-xl shadow-emerald-600/20"
             >
               Explore Research
               <span className="ml-2 group-hover:translate-x-1 transition-transform inline-block">→</span>
@@ -117,14 +117,14 @@ export const Landing: React.FC = () => {
 
             <Link
               to="/search"
-              className="group px-8 py-4 border-2 border-neutral-200 text-neutral-700 font-bold text-sm uppercase tracking-[0.2em] rounded-full hover:border-neutral-300 hover:bg-neutral-50 transition-all duration-300"
+              className="group px-7 py-3 border-2 border-neutral-200 text-neutral-700 font-bold text-sm uppercase tracking-[0.12em] rounded-full hover:border-neutral-300 hover:bg-neutral-50 transition-all duration-300"
             >
               Search Archive
             </Link>
           </div>
 
           {/* Email Capture */}
-          <div className="max-w-md mx-auto">
+          <div className="max-w-md mx-auto mb-4">
             <form onSubmit={handleSubscribe} className="flex gap-2" aria-label="Subscribe form">
               <input
                 type="email"
@@ -149,7 +149,34 @@ export const Landing: React.FC = () => {
             {subscribeStatus === 'error' && (
               <p className="mt-3 text-sm text-red-600 font-medium">Please enter a valid email address.</p>
             )}
-          </div> 
+          </div>
+
+          {/* Featured Highlight (subtle overlap) */}
+          {featuredArticles[0] && (
+            <div className="mt-8 -mb-20">
+              <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-2xl p-6 transform -translate-y-8">
+                <div className="md:flex md:items-center md:gap-6">
+                  <div className="md:w-1/3 rounded-xl overflow-hidden bg-neutral-100 h-56">
+                    {featuredArticles[0].image ? (
+                      <img src={featuredArticles[0].image} alt={featuredArticles[0].title} className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-neutral-400">No image</div>
+                    )}
+                  </div>
+
+                  <div className="md:flex-1 mt-4 md:mt-0">
+                    <div className="text-xs text-neutral-400 uppercase tracking-wider mb-2">Featured</div>
+                    <h3 className="text-2xl md:text-3xl font-serif font-black mb-2 text-neutral-900">{featuredArticles[0].title}</h3>
+                    <p className="text-neutral-600 mb-4 line-clamp-2">{featuredArticles[0].body.replace(/[#*`]/g, '').substring(0, 200)}...</p>
+                    <div className="flex items-center gap-4">
+                      <Link to={`/read/${featuredArticles[0].id}`} className="px-4 py-2 bg-emerald-600 text-white rounded-full font-bold hover:bg-emerald-700">Read</Link>
+                      <Link to={`/${featuredArticles[0].category}`} className="text-sm text-neutral-500 font-medium">View category →</Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
