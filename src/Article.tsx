@@ -19,6 +19,7 @@ export const Article: React.FC = () => {
     const { id } = useParams();
     const [article, setArticle] = useState<any>(null);
     const [loading, setLoading] = useState(true);
+    const [copyStatus, setCopyStatus] = useState<'idle'|'copied'|'error'>('idle');
 
     useEffect(() => {
         if (id) {
@@ -77,6 +78,7 @@ export const Article: React.FC = () => {
             <SEOHead
                 title={article.title}
                 description={article.body.substring(0, 160).replace(/[#*`]/g, '')}
+                image={article.og_image || article.image || '/og-image.png'}
                 type="article"
                 publishedTime={article.created_at}
                 author={article.author_name}
@@ -105,9 +107,6 @@ export const Article: React.FC = () => {
                         >
                             {new Date(article.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}
                         </time>
-                        <span className="text-[10px] uppercase font-mono text-neutral-300">
-                            • {calculateReadingTime(article.body)} min read
-                        </span>
                         {article.updated_at && article.updated_at !== article.created_at && (
                             <span className="text-[10px] uppercase font-mono text-emerald-600">
                                 • Updated {new Date(article.updated_at).toLocaleDateString()}
@@ -115,7 +114,60 @@ export const Article: React.FC = () => {
                         )}
                     </div>
 
-                    <h1 className="text-4xl md:text-6xl font-serif font-black leading-[1.1] tracking-tight mb-8">{article.title}</h1>
+                    <h1 className="text-4xl md:text-6xl font-serif font-black leading-[1.1] tracking-tight mb-6">{article.title}</h1>
+
+                    {/* Share / Actions */}
+                    <div className="flex items-center justify-between mb-6">
+                        <div className="flex items-center gap-3">
+                            <button
+                                onClick={() => {
+                                    const url = typeof window !== 'undefined' ? window.location.href : '';
+                                    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(url)}`, '_blank', 'noopener');
+                                }}
+                                className="px-3 py-2 bg-neutral-50 border rounded hover:bg-neutral-100 text-sm"
+                                aria-label="Share on Twitter"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 inline-block mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M22 5.92c-.7.31-1.46.52-2.26.61.81-.48 1.43-1.24 1.72-2.15-.75.45-1.58.78-2.47.96a4.1 4.1 0 0 0-7 3.74A11.62 11.62 0 0 1 3.16 4.9a4.1 4.1 0 0 0 1.27 5.48c-.6-.02-1.17-.18-1.66-.46v.05c0 1.97 1.4 3.61 3.25 3.98-.34.09-.7.14-1.07.14-.26 0-.52-.03-.77-.07.52 1.59 2.03 2.75 3.82 2.78A8.23 8.23 0 0 1 2 19.54a11.63 11.63 0 0 0 6.29 1.84c7.55 0 11.68-6.26 11.68-11.69v-.53c.8-.58 1.47-1.3 2.01-2.12-.73.33-1.52.55-2.34.65z"/></svg>
+                                Twitter
+                            </button>
+
+                            <button
+                                onClick={() => {
+                                    const url = typeof window !== 'undefined' ? window.location.href : '';
+                                    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank', 'noopener');
+                                }}
+                                className="px-3 py-2 bg-neutral-50 border rounded hover:bg-neutral-100 text-sm"
+                                aria-label="Share on LinkedIn"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 inline-block mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 11.001 5.001 2.5 2.5 0 01-.001-5.001zM3 8.98h3.96V21H3V8.98zM9.5 8.98H13v1.62h.05c.5-.95 1.76-1.95 3.63-1.95 3.88 0 4.6 2.56 4.6 5.89V21h-3.96v-5.09c0-1.22-.02-2.78-1.7-2.78-1.7 0-1.96 1.33-1.96 2.68V21H9.5V8.98z"/></svg>
+                                LinkedIn
+                            </button>
+
+                            <button
+                                onClick={async () => {
+                                    try {
+                                        const url = typeof window !== 'undefined' ? window.location.href : '';
+                                        await navigator.clipboard.writeText(url);
+                                        setCopyStatus('copied');
+                                        setTimeout(() => setCopyStatus('idle'), 2500);
+                                    } catch (e) {
+                                        setCopyStatus('error');
+                                        setTimeout(() => setCopyStatus('idle'), 2500);
+                                    }
+                                }}
+                                className="px-3 py-2 bg-neutral-50 border rounded hover:bg-neutral-100 text-sm flex items-center gap-2"
+                                aria-label="Copy link"
+                            >
+                                Copy Link
+                                {copyStatus === 'copied' && <span className="text-emerald-600 text-xs">Copied</span>}
+                                {copyStatus === 'error' && <span className="text-red-600 text-xs">Error</span>}
+                            </button>
+                        </div>
+
+                        <div className="text-sm text-neutral-500">
+                            <span className="font-mono uppercase tracking-wide">•</span> {calculateReadingTime(article.body)} min read
+                        </div>
+                    </div>
 
                     {article.author_name && (
                         <div className="flex items-center gap-3 mb-8">

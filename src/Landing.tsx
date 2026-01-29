@@ -9,12 +9,15 @@ type Article = {
   body: string;
   category: string;
   created_at: string;
+  image?: string;
 };
 
 export const Landing: React.FC = () => {
   const [featuredArticles, setFeaturedArticles] = useState<Article[]>([]);
   const [recentArticles, setRecentArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
+  const [email, setEmail] = useState('');
+  const [subscribeStatus, setSubscribeStatus] = useState<'idle'|'loading'|'success'|'error'>('idle');
 
   useEffect(() => {
     api.getContent()
@@ -25,6 +28,29 @@ export const Landing: React.FC = () => {
       })
       .catch(() => setLoading(false));
   }, []);
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !email.includes('@')) {
+      setSubscribeStatus('error');
+      return;
+    }
+    setSubscribeStatus('loading');
+
+    try {
+      await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      setSubscribeStatus('success');
+      setEmail('');
+    } catch (err) {
+      setSubscribeStatus('error');
+    } finally {
+      setTimeout(() => setSubscribeStatus('idle'), 4000);
+    }
+  };
 
   const categories = [
     { slug: 'technology', name: 'Technology', description: 'AI, automation, and digital systems', color: 'bg-blue-500' },
@@ -99,17 +125,31 @@ export const Landing: React.FC = () => {
 
           {/* Email Capture */}
           <div className="max-w-md mx-auto">
-            <form className="flex gap-2">
+            <form onSubmit={handleSubscribe} className="flex gap-2" aria-label="Subscribe form">
               <input
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Get weekly intelligence brief..."
                 className="flex-1 px-4 py-3 rounded-lg border border-neutral-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                aria-label="Email address"
+                required
               />
-              <button className="px-5 py-3 bg-emerald-600 text-white text-sm font-bold rounded-lg hover:bg-emerald-700 transition">
-                Join
+              <button
+                type="submit"
+                disabled={subscribeStatus === 'loading'}
+                className="px-5 py-3 bg-emerald-600 text-white text-sm font-bold rounded-lg hover:bg-emerald-700 transition disabled:opacity-60"
+              >
+                {subscribeStatus === 'loading' ? 'Joining...' : 'Join'}
               </button>
             </form>
-          </div>
+            {subscribeStatus === 'success' && (
+              <p className="mt-3 text-sm text-emerald-600 font-medium">Thanks — you're subscribed! ✅</p>
+            )}
+            {subscribeStatus === 'error' && (
+              <p className="mt-3 text-sm text-red-600 font-medium">Please enter a valid email address.</p>
+            )}
+          </div> 
         </div>
       </section>
 
@@ -171,7 +211,16 @@ export const Landing: React.FC = () => {
                   </span>
                 </div>
 
-                <Link to={`/read/${article.id}`}>
+                <Link to={`/read/${article.id}`} className="group block">
+                  <div className="mb-6 overflow-hidden rounded-2xl bg-neutral-100">
+                    {article.image ? (
+                      <img src={article.image} alt={article.title} className="w-full h-56 object-cover" loading="lazy" />
+                    ) : (
+                      <div className="w-full h-56 flex items-center justify-center text-neutral-400">
+                        No image
+                      </div>
+                    )}
+                  </div>
                   <h3 className="text-3xl md:text-4xl font-serif font-black group-hover:text-emerald-600 transition-all duration-500 leading-tight tracking-tight">
                     {article.title}
                   </h3>
@@ -196,6 +245,12 @@ export const Landing: React.FC = () => {
                 to={`/read/${article.id}`}
                 className="group block p-6 bg-neutral-50 hover:bg-white border border-transparent hover:border-neutral-200 rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-black/5"
               >
+                {article.image && (
+                  <div className="mb-4 rounded-lg overflow-hidden h-40">
+                    <img src={article.image} alt={article.title} className="w-full h-full object-cover" loading="lazy" />
+                  </div>
+                )}
+
                 <div className="text-xs text-neutral-400 mb-2">
                   {article.category} · {new Date(article.created_at).toLocaleDateString()}
                 </div>
