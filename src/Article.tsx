@@ -91,9 +91,13 @@ export const Article: React.FC = () => {
             <article className="animate-in fade-in slide-in-from-bottom-2 duration-1000">
                 <header className="mb-16">
                     <div className="flex items-center gap-4 mb-8">
-                        <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-emerald-600 border border-emerald-600/20 px-2 py-0.5 rounded">
-                            {article.category} Protocol
-                        </span>
+                        <span className={`text-[10px] font-bold uppercase tracking-[0.3em] px-2 py-0.5 rounded
+    ${article.type === 'knowledge' 
+        ? 'text-indigo-600 border border-indigo-600/30' 
+        : 'text-emerald-600 border border-emerald-600/20'}
+`}>
+    {article.type === 'knowledge' ? 'Knowledge Node' : `${article.category} Protocol`}
+</span>
                         <div className="h-px flex-1 bg-black/[0.03]"></div>
                         <time 
                             dateTime={article.created_at}

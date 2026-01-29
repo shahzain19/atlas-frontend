@@ -3,7 +3,20 @@ import { useAuthStore } from './store/authStore';
 
 const API_URL = 'https://atlas-backend-npbs.vercel.app/api';
 
-// Create axios instance with interceptors
+/* ----------------------------- Types ----------------------------- */
+
+export type ContentType = 'blog' | 'knowledge' | 'product';
+
+export interface AutomationMeta {
+    generator?: string;
+    model?: string;
+    topic?: string;
+    version?: string;
+    [key: string]: any;
+}
+
+/* -------------------------- Axios Setup --------------------------- */
+
 const apiClient = axios.create({
     baseURL: API_URL,
 });
@@ -22,12 +35,13 @@ apiClient.interceptors.response.use(
     (response) => response,
     (error) => {
         if (error.response?.status === 401) {
-            // Token expired or invalid
             useAuthStore.getState().logout();
         }
         return Promise.reject(error);
     }
 );
+
+/* ------------------------------ API ------------------------------- */
 
 export const api = {
     // Auth endpoints
@@ -50,9 +64,20 @@ export const api = {
         },
     },
 
-    // Content endpoints
-    getContent: async (category?: string, filters?: { status?: string; author_id?: number; featured?: boolean }) => {
-        const res = await apiClient.get('/content', { params: { category, ...filters } });
+    /* --------------------------- Content --------------------------- */
+
+    getContent: async (
+        category?: string,
+        filters?: {
+            status?: string;
+            author_id?: number;
+            featured?: boolean;
+            type?: ContentType;
+        }
+    ) => {
+        const res = await apiClient.get('/content', {
+            params: { category, ...filters },
+        });
         return res.data;
     },
 
@@ -61,8 +86,16 @@ export const api = {
         body: string;
         category: string;
         status?: string;
+        type?: ContentType;
+        canonical_id?: string | null;
+        automation?: AutomationMeta;
         tags?: string[];
-        sources?: Array<{ title: string; url?: string; type?: string; author?: string }>;
+        sources?: Array<{
+            title: string;
+            url?: string;
+            type?: string;
+            author?: string;
+        }>;
     }) => {
         const res = await apiClient.post('/content', data);
         return res.data;
@@ -73,13 +106,19 @@ export const api = {
         return res.data;
     },
 
-    updateContent: async (id: string, data: Partial<{
-        title: string;
-        body: string;
-        category: string;
-        status: string;
-        featured: boolean;
-    }>) => {
+    updateContent: async (
+        id: string,
+        data: Partial<{
+            title: string;
+            body: string;
+            category: string;
+            status: string;
+            featured: boolean;
+            type: ContentType;
+            canonical_id: string | null;
+            automation: AutomationMeta;
+        }>
+    ) => {
         const res = await apiClient.put(`/content/${id}`, data);
         return res.data;
     },
@@ -94,7 +133,8 @@ export const api = {
         return res.data;
     },
 
-    // Tag endpoints
+    /* ----------------------------- Tags ---------------------------- */
+
     tags: {
         getAll: async () => {
             const res = await apiClient.get('/tags');
@@ -105,16 +145,21 @@ export const api = {
             return res.data;
         },
         getContentByTag: async (slug: string, limit = 50, offset = 0) => {
-            const res = await apiClient.get(`/tags/${slug}/content`, { params: { limit, offset } });
+            const res = await apiClient.get(`/tags/${slug}/content`, {
+                params: { limit, offset },
+            });
             return res.data;
         },
         autocomplete: async (query: string) => {
-            const res = await apiClient.get('/tags/autocomplete', { params: { q: query } });
+            const res = await apiClient.get('/tags/autocomplete', {
+                params: { q: query },
+            });
             return res.data;
         },
     },
 
-    // Search endpoints
+    /* ---------------------------- Search --------------------------- */
+
     search: async (params: {
         q: string;
         category?: string;
@@ -123,13 +168,16 @@ export const api = {
         to?: string;
         author_id?: number;
         limit?: number;
+        type?: ContentType;
     }) => {
         const res = await apiClient.get('/search', { params });
         return res.data;
     },
 
     searchSuggestions: async (query: string) => {
-        const res = await apiClient.get('/search/suggestions', { params: { q: query } });
+        const res = await apiClient.get('/search/suggestions', {
+            params: { q: query },
+        });
         return res.data;
     },
 
@@ -137,7 +185,8 @@ export const api = {
         await apiClient.post(`/content/${id}/view`);
     },
 
-    // User management endpoints (admin only)
+    /* ----------------------------- Users --------------------------- */
+
     users: {
         getAll: async () => {
             const res = await apiClient.get('/users');
@@ -157,7 +206,8 @@ export const api = {
         },
     },
 
-    // API Key endpoints
+    /* ---------------------------- API Keys -------------------------- */
+
     keys: {
         list: async () => {
             const res = await apiClient.get('/keys');
@@ -170,10 +220,11 @@ export const api = {
         delete: async (id: number) => {
             const res = await apiClient.delete(`/keys/${id}`);
             return res.data;
-        }
+        },
     },
 
-    // Legacy seed endpoint
+    /* --------------------------- Legacy ---------------------------- */
+
     seed: async () => {
         await apiClient.post('/seed');
     },
