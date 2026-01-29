@@ -261,6 +261,7 @@ export const Article: React.FC = () => {
                                     currentArticleId={String(article.id)} 
                                     category={article.category}
                                     tags={article.tags}
+                                    compact={true}
                                 />
                             </div>
                         </div>
